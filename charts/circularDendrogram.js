@@ -52,11 +52,8 @@
         return root;
     });
 
+    // The full record is present and needs to be passed through the recursion.
     function seek(root, path, classes, record) {
-//        console.log("inside seek: path = %o, classes = %o", path, classes);
-
-        console.log("full record is %o", record);
-
         if (path.length < 1) return false;
         if (!root.children) root.children = [];
         var p = root.children.filter(function(d) { return d.name == path[0]; })[0];
@@ -76,7 +73,6 @@
         if (path.length == 1) return p;
         else return seek(p, path.slice(1), classes.slice(1), record);
     }
-
 
     tree.dimensions().remove('size');
     tree.dimensions().remove('color');
@@ -122,7 +118,6 @@
 	    .size([360, diameter() / 2 - 120]);
 
 	root = d3.hierarchy(data);
-
 	cluster(root);
 
 	var link = g.selectAll("path.link")
