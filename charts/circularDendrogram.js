@@ -24,10 +24,8 @@
         .multiple(true);
 
     // accessor forces a cast to number
-    const someDimension = tree.dimension().title("Some dimension").accessor(d => +d).types(Number);
-
+    const percentage = tree.dimension().title("Percentage").accessor(d => +d).types(Number);
     const fill = tree.dimension().title("Fill").types(String);
-
 
     tree.map(data => {
         var root = { children : [] };
@@ -67,7 +65,7 @@
                     name: path[0],
                     class: classes[0],
                     children:[],
-                    someDimension: someDimension(record),
+                    percentage: percentage(record),
                     fill: fill(record)
                 };
                 root.children.push(p);
@@ -147,7 +145,7 @@
 	    .style("stroke-width", "1px");
 
 	node.append("text")
-	    .attr("dy", ".31em")
+	    .attr("dy", 16)
 	    .attr("text-anchor", d => {
 		return d.x < 180 ? "start" : "end";
 	    })
@@ -159,6 +157,21 @@
 	    })
 	    .style("font-size", "11px")
 	    .style("font-family", "Arial, Helvetica");
+
+	node.append("text")
+	    .attr("dy", 32)
+	    .attr("text-anchor", d => {
+		return d.x < 180 ? "start" : "end";
+	    })
+	    .attr("transform", d => {
+		return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)";
+	    })
+	    .text(d => {
+		return d.data.percentage + "%";
+	    })
+	    .style("font-size", "11px")
+	    .style("font-family", "Arial, Helvetica");
+
 
     })
 })();
