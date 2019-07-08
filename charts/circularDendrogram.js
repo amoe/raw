@@ -26,6 +26,8 @@
     // accessor forces a cast to number
     const someDimension = tree.dimension().title("Some dimension").accessor(d => +d).types(Number);
 
+    const fill = tree.dimension().title("Fill").types(String);
+
 
     tree.map(data => {
         var root = { children : [] };
@@ -65,7 +67,8 @@
                     name: path[0],
                     class: classes[0],
                     children:[],
-                    someDimension: someDimension(record)
+                    someDimension: someDimension(record),
+                    fill: fill(record)
                 };
                 root.children.push(p);
             } else p = root;
@@ -138,8 +141,8 @@
 	    });
 
 	node.append("circle")
-	    .attr("r", 4.5)
-	    .style("fill", "#eeeeee")
+	    .attr("r", 8)
+	    .style("fill", d => d.data.fill)
 	    .style("stroke", "#999999")
 	    .style("stroke-width", "1px");
 
